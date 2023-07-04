@@ -9,13 +9,9 @@ public class FileReaderEBufferedReader {
 	public static void main(String[] args) {
 		
 		String path = "F:\\\\tmp\\\\lista-de-tarefas.txt";
-		BufferedReader br = null;
-		FileReader fr = null;
 		
-		try {
-			fr = new FileReader(path);
-			br = new BufferedReader(fr);
-			
+		try(BufferedReader br = new BufferedReader(new FileReader(path))) {
+		
 			String line = br.readLine();
 			
 			while(line != null) {
@@ -26,17 +22,7 @@ public class FileReaderEBufferedReader {
 		catch(IOException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
-		finally {
-			try {
-				if(br != null) 
-					br.close();
-				if(fr != null)
-					fr.close();
-			}
-			catch(IOException e) {
-				e.printStackTrace();
-			}
-		}
+		
 	}
 
 }
