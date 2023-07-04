@@ -8,7 +8,7 @@ public class FileReaderEBufferedReader {
 
 	public static void main(String[] args) {
 		
-		String path = "F:\\\\tmp\\\\lista-de-tarefas.txt";
+		String path = "F:\\tmp\\lista-de-tarefas.txt";
 		
 		try(BufferedReader br = new BufferedReader(new FileReader(path))) {
 		
