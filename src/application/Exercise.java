@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -15,7 +16,7 @@ import entities.Product;
 
 public class Exercise {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		
 		Locale.setDefault(Locale.US);
 		Scanner scanner = new Scanner(System.in);
@@ -30,34 +31,34 @@ public class Exercise {
 		
 		boolean success = new File(sourceFolderStr + "\\out").mkdir();
 		
-		String targetFileStr = sourceFolderStr + "\\out\\summary.cvs.txt";
+		String targetFileStr = sourceFolderStr + "\\out\\summary.csv";
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(sourceFileStr))) {
 			
-			String itemCvs = br.readLine();
+			String itemCsv = br.readLine();
 			
-			while(itemCvs != null) {
-				String[] fields = itemCvs.split(",");
+			while(itemCsv != null) {
+				
+				String[] fields = itemCsv.split(",");
 				String name = fields[0];
 				double price = Double.parseDouble(fields[1]);
 				int quantity = Integer.parseInt(fields[2]);
 				
 				list.add(new Product(name, price, quantity));
 				
-				itemCvs = br.readLine();
+				itemCsv = br.readLine();
 			}
-			
-			try(BufferedWriter bw = new BufferedWriter(new FileWriter(targetFileStr))){
+			try(BufferedWriter bw = new BufferedWriter(new FileWriter(targetFileStr))) {
+				
 				for(Product item : list) {
 					bw.write(item.getProductName() + ", " + String.format("%.2f", item.total()));
 					bw.newLine();
 				}
 				
-				System.out.println(targetFileStr + "CREATED!");
+				System.out.println(targetFileStr + " CREATED!");
 			}
-			
-		catch (IOException e){
-			System.out.println("Error writing file: " + e.getMessage());
+			catch (IOException e) {
+				System.out.println("Error writing file: " + e.getMessage());
 		}
 	}
 	catch (IOException e) {
@@ -65,6 +66,6 @@ public class Exercise {
 	}
 		
 	scanner.close();
+	
 	}
-
 }
